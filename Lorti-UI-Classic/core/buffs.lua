@@ -66,7 +66,7 @@ local function applySkin(b)
 
     	--shadow
     	if cfg.background.show then
-      		local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
+      		local back = CreateFrame("Frame", nil, b, BackdropTemplateMixin and "BackdropTemplate")
       		back:SetPoint("TOPLEFT", b, "TOPLEFT", 3, 3)
       		back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", cfg.background.padding, -cfg.background.padding)
       		back:SetFrameLevel(b:GetFrameLevel() - 1)
