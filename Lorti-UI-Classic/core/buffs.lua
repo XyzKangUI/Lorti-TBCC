@@ -5,6 +5,9 @@ local function durationSetText(duration, arg1, arg2)
 	duration:SetText(format("|r"..string.gsub(arg1, " ", "").."|r", arg2))
 end
 
+	--classcolor
+	local classColor = RAID_CLASS_COLORS[select(2, UnitClass("player"))]
+
 	--backdrop debuff
 	local backdropDebuff = {
 		bgFile = nil,
@@ -61,19 +64,16 @@ local function applySkin(b)
 		backdrop = backdropBuff
 	end
 
-	--button
---	b:SetSize(cfg.button.size, cfg.button.size)
+	--check class coloring options
+	if cfg.border.classcolored then
+		cfg.border.color = classColor
+	end
+	if cfg.background.classcolored then
+		cfg.background.color = classColor
+	end
 
-    	--shadow
-    	if cfg.background.show then
-      		local back = CreateFrame("Frame", nil, b, BackdropTemplateMixin and "BackdropTemplate")
-      		back:SetPoint("TOPLEFT", b, "TOPLEFT", 3, 3)
-      		back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", cfg.background.padding, -cfg.background.padding)
-      		back:SetFrameLevel(b:GetFrameLevel() - 1)
-      		back:SetBackdrop(backdrop)
-      		back:SetBackdropBorderColor(cfg.background.color.r,cfg.background.color.g,cfg.background.color.b,cfg.background.color.a)
-      		b.bg = back
-    	end
+	--button
+	b:SetSize(cfg.button.size, cfg.button.size)
 
 	--icon
 	local icon = _G[name.."Icon"]
@@ -89,13 +89,11 @@ local function applySkin(b)
 	border:SetTexture(cfg.border.texture)
 	border:SetTexCoord(0,1,0,1)
 	border:SetDrawLayer("BACKGROUND",-7)
-
 	if tempenchant then
 		border:SetVertexColor(0.7,0,1)
 	elseif not debuff then
 		border:SetVertexColor(cfg.border.color.r,cfg.border.color.g,cfg.border.color.b)
 	end
-
 	border:ClearAllPoints()
 	border:SetAllPoints(b)
 	b.border = border
@@ -105,10 +103,22 @@ local function applySkin(b)
 	b.duration:ClearAllPoints()
 	b.duration:SetPoint(cfg.duration.pos.a1,cfg.duration.pos.x,cfg.duration.pos.y)
 	hooksecurefunc(b.duration, "SetFormattedText", durationSetText)
+
     	--count
     	b.count:SetFont(cfg.count.font, cfg.count.size, "THINOUTLINE")
     	b.count:ClearAllPoints()
     	b.count:SetPoint(cfg.count.pos.a1,cfg.count.pos.x,cfg.count.pos.y)
+
+    	--shadow
+	if cfg.background.show then
+		local back = CreateFrame("Frame", nil, b, BackdropTemplateMixin and "BackdropTemplate")
+      		back:SetPoint("TOPLEFT", b, "TOPLEFT", -cfg.background.padding, cfg.background.padding)
+      		back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", cfg.background.padding, -cfg.background.padding)
+      		back:SetFrameLevel(b:GetFrameLevel() - 1)
+      		back:SetBackdrop(backdrop)
+      		back:SetBackdropBorderColor(cfg.background.color.r, cfg.background.color.g, cfg.background.color.b)
+      		b.bg = back
+	end
 
     	--set button styled variable
     	b.styled = true
