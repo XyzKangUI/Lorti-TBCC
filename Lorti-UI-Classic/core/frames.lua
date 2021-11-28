@@ -4,6 +4,21 @@
   local cfg = ns.cfg
   local dragFrameList = ns.dragFrameList
 
+   local addonlist = {
+	["Shadowed Unit Frames"] = true, 
+	["PitBull Unit Frames 4.0"] = true, 
+	["X-Perl UnitFrames"] = true, 
+	["Z-Perl UnitFrames"] = true, 
+	["EasyFrames"] = true, 
+	["RougeUI"] = true, 
+	["ElvUI"] = true, 
+	["Uber UI Classic"] = true, 
+	["whoaThickFrames_BCC"] = true, 
+	["whoaUnitFrames_BCC"] = true, 
+	["AbyssUI"] = true, 
+	["KkthnxUI"] = true
+   }
+
   -- v:SetVertexColor(.35, .35, .35) GREY
   -- v:SetVertexColor(.05, .05, .05) DARKEST
 
@@ -64,34 +79,46 @@ end
 -- Classification
 
 hooksecurefunc('TargetFrame_CheckClassification', function(self, forceNormalTexture)
-		 local classification = UnitClassification(self.unit);
-		if ( classification == "minus" ) then
-			self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus");
-			self.borderTexture:SetVertexColor(.05, .05, .05)
-			self.nameBackground:Hide();
-			self.manabar.pauseUpdates = true;
-			self.manabar:Hide();
-			self.manabar.TextString:Hide();
-			self.manabar.LeftText:Hide();
-			self.manabar.RightText:Hide();
-			forceNormalTexture = true;
-		elseif ( classification == "worldboss" or classification == "elite" ) then
-			self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\elite")
-			self.borderTexture:SetVertexColor(1, 1, 1)
-		elseif ( classification == "rareelite" ) then
-			self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\rare-elite")
-			self.borderTexture:SetVertexColor(1, 1, 1)
-		elseif ( classification == "rare" ) then
-			self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\rare")
-			self.borderTexture:SetVertexColor(1, 1, 1)
-		else
-			self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame")
-			self.borderTexture:SetVertexColor(.05, .05, .05)
+	for addon in pairs(addonlist) do
+		if IsAddOnLoaded(addon) then
+			return
 		end
+	end
+
+	local classification = UnitClassification(self.unit);
+	if ( classification == "minus" ) then
+		self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Minus");
+		self.borderTexture:SetVertexColor(.05, .05, .05)
+		self.nameBackground:Hide();
+		self.manabar.pauseUpdates = true;
+		self.manabar:Hide();
+		self.manabar.TextString:Hide();
+		self.manabar.LeftText:Hide();
+		self.manabar.RightText:Hide();
+		forceNormalTexture = true;
+	elseif ( classification == "worldboss" or classification == "elite" ) then
+		self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\elite")
+		self.borderTexture:SetVertexColor(1, 1, 1)
+	elseif ( classification == "rareelite" ) then
+		self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\rare-elite")
+		self.borderTexture:SetVertexColor(1, 1, 1)
+	elseif ( classification == "rare" ) then
+		self.borderTexture:SetTexture("Interface\\AddOns\\Lorti-UI-Classic\\textures\\target\\rare")
+		self.borderTexture:SetVertexColor(1, 1, 1)
+	else
+		self.borderTexture:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame")
+		self.borderTexture:SetVertexColor(.05, .05, .05)
+	end
 end)
 
 	
 local function ColorRaid()
+	for addons in pairs(addonlist) do
+		if IsAddOnLoaded(addons) then
+			return
+		end
+	end
+
 	for g = 1, NUM_RAID_GROUPS do
 		local group = _G["CompactRaidGroup"..g.."BorderFrame"]
 		if group then
@@ -131,16 +158,6 @@ local function ColorRaid()
 		end
 	end
 end
-
--- local CF = CreateFrame("Frame")
--- CF:SetScript("OnUpdate", function()
---			if CompactRaidGroup1 and not groupcolored == true then
---				ColorRaid()
---			end
---			if CompactRaidFrame1 and not singlecolored == true then
---				ColorRaid()
---			end
--- end)
 
 local Framecolor = CreateFrame("Frame")
 Framecolor:RegisterEvent("ADDON_LOADED")
@@ -284,9 +301,9 @@ end
 
 --Darker color stuff
 for i,v in pairs({
-      LootFrameInsetBg,
-      LootFrameTitleBg,
-	  MerchantFrameTitleBg,
+      	LootFrameInsetBg,
+      	LootFrameTitleBg,	
+	MerchantFrameTitleBg,
 
 }) do
    v:SetVertexColor(.05, .05, .05)
@@ -424,29 +441,29 @@ for i,v in pairs({
 end
 
 for i,v in pairs({
-      SlidingActionBarTexture0,
-      SlidingActionBarTexture1,
-      MainMenuBarTexture0,
-      MainMenuBarTexture1,
-      MainMenuBarTexture2,
-      MainMenuBarTexture3,
-      MainMenuMaxLevelBar0,
-      MainMenuMaxLevelBar1,
-      MainMenuMaxLevelBar2,
-      MainMenuMaxLevelBar3,
-	  MainMenuXPBarTexture0,
-      MainMenuXPBarTexture1,
-	  MainMenuXPBarTexture2,
-	  MainMenuXPBarTexture3,
-	  MainMenuXPBarTexture4,
-	  ReputationWatchBar.StatusBar.WatchBarTexture0,
-      ReputationWatchBar.StatusBar.WatchBarTexture1,
-      ReputationWatchBar.StatusBar.WatchBarTexture2,
-      ReputationWatchBar.StatusBar.WatchBarTexture3,
-		ReputationWatchBar.StatusBar.XPBarTexture0,
-	  ReputationWatchBar.StatusBar.XPBarTexture1,
-	  ReputationWatchBar.StatusBar.XPBarTexture2,
-	  ReputationWatchBar.StatusBar.XPBarTexture3,
+	SlidingActionBarTexture0,
+      	SlidingActionBarTexture1,
+      	MainMenuBarTexture0,
+      	MainMenuBarTexture1,
+      	MainMenuBarTexture2,
+      	MainMenuBarTexture3,
+      	MainMenuMaxLevelBar0,
+      	MainMenuMaxLevelBar1,
+      	MainMenuMaxLevelBar2,
+      	MainMenuMaxLevelBar3,
+	MainMenuXPBarTexture0,
+	MainMenuXPBarTexture1,
+	MainMenuXPBarTexture2,
+	MainMenuXPBarTexture3,
+	MainMenuXPBarTexture4,
+	ReputationWatchBar.StatusBar.WatchBarTexture0,
+      	ReputationWatchBar.StatusBar.WatchBarTexture1,
+      	ReputationWatchBar.StatusBar.WatchBarTexture2,
+      	ReputationWatchBar.StatusBar.WatchBarTexture3,
+	ReputationWatchBar.StatusBar.XPBarTexture0,
+	ReputationWatchBar.StatusBar.XPBarTexture1,
+	ReputationWatchBar.StatusBar.XPBarTexture2,
+	ReputationWatchBar.StatusBar.XPBarTexture3,
 
 	}) do
 
@@ -512,6 +529,12 @@ end
 end)
 
 local function PvPIcon()
+	for addon in pairs(addonlist) do
+		if IsAddOnLoaded(addon) then
+			return
+		end
+	end
+
 	for i,v in pairs({
 		PlayerPVPIcon,
 		TargetFrameTextureFramePVPIcon,
