@@ -565,7 +565,7 @@ local function OnEvent(self, event)
 
 	if (event == "PLAYER_LOGIN") then
 		enable()
-		ScaleFrames()
+--		ScaleFrames()
 	end
 
 	if (event == "PLAYER_ENTERING_WORLD") then
