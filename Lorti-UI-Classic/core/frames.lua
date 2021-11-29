@@ -113,12 +113,6 @@ end)
 
 	
 local function ColorRaid()
-	for addons in pairs(addonlist) do
-		if IsAddOnLoaded(addons) then
-			return
-		end
-	end
-
 	for g = 1, NUM_RAID_GROUPS do
 		local group = _G["CompactRaidGroup"..g.."BorderFrame"]
 		if group then
@@ -519,7 +513,7 @@ end
 			v:SetVertexColor(.35, .35, .35)
 		end
 	end
-	
+
 	--UNREGISTER WHEN DONE 
 											
 	if (IsAddOnLoaded("Blizzard_TalentUI") and IsAddOnLoaded("Blizzard_TimeManager") and IsAddOnLoaded("Blizzard_TradeSkillUI") and IsAddOnLoaded("Lorti-UI-Classic")) then
@@ -529,12 +523,6 @@ end
 end)
 
 local function PvPIcon()
-	for addon in pairs(addonlist) do
-		if IsAddOnLoaded(addon) then
-			return
-		end
-	end
-
 	for i,v in pairs({
 		PlayerPVPIcon,
 		TargetFrameTextureFramePVPIcon,
@@ -567,9 +555,17 @@ local function ScaleFrames()
 end
 
 local function OnEvent(self, event)
+	for addon in pairs(addonlist) do
+		if IsAddOnLoaded(addon) then
+			for _, v in pairs(events) do self:UnregisterEvent(v) end
+			self:SetScript("OnEvent", nil)
+			return
+		end
+	end
+
 	if (event == "PLAYER_LOGIN") then
 		enable()
---		ScaleFrames()
+		ScaleFrames()
 	end
 
 	if (event == "PLAYER_ENTERING_WORLD") then
@@ -597,4 +593,4 @@ end
 
 local e = CreateFrame("Frame")
 for _, v in pairs(events) do e:RegisterEvent(v) end
-e:SetScript('OnEvent', OnEvent)
+e:SetScript("OnEvent", OnEvent)
