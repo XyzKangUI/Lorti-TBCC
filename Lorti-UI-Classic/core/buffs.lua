@@ -3,12 +3,6 @@ local cfg = ns.cfg
 
 local function durationSetText(duration, arg1, arg2)
 	duration:SetText(format("|r"..string.gsub(arg1, " ", "").."|r", arg2))
-
-	if Lorti.switchtimer then
-		duration:SetPoint("BOTTOM", 0, -12)
-	else
-		duration:SetPoint("BOTTOM", 0, 0)
-	end
 end
 
 	--classcolor
@@ -49,6 +43,7 @@ end
   ---------------------------------------
 
 local function applySkin(b)
+	if not b or (b and b.styled) then return end
 	local name = b:GetName()
 	local tempenchant, debuff, buff = false, false, false
 
@@ -106,6 +101,7 @@ local function applySkin(b)
     	--duration
 	b.duration:SetFont(cfg.duration.font, cfg.duration.size, "THINOUTLINE")
 	b.duration:ClearAllPoints()
+	b.duration:SetPoint(cfg.duration.pos.a1,cfg.duration.pos.x,cfg.duration.pos.y)
 	hooksecurefunc(b.duration, "SetFormattedText", durationSetText)
 
     	--count
@@ -133,8 +129,8 @@ end
   ---------------------------------------
 
 for i = 1, NUM_TEMP_ENCHANT_FRAMES do
-	local button = _G["TempEnchant"..i]
-	if (button and not button.styled) then applySkin(button) end
+	local button = _G['TempEnchant'..i]
+	applySkin(button)
 end
 
 hooksecurefunc("AuraButton_Update", function(self, index)
