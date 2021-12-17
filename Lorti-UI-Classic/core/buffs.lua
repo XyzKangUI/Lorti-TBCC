@@ -102,7 +102,9 @@ local function applySkin(b)
 	b.duration:SetFont(cfg.duration.font, cfg.duration.size, "THINOUTLINE")
 	b.duration:ClearAllPoints()
 	b.duration:SetPoint(cfg.duration.pos.a1,cfg.duration.pos.x,cfg.duration.pos.y)
-	hooksecurefunc(b.duration, "SetFormattedText", durationSetText)
+	if not (IsAddOnLoaded("SeriousBuffTimers") or IsAddOnLoaded("BuffTimers") or IsAddOnLoaded("RougeUI")) then
+		hooksecurefunc(b.duration, "SetFormattedText", durationSetText)
+	end
 
     	--count
     	b.count:SetFont(cfg.count.font, cfg.count.size, "THINOUTLINE")
