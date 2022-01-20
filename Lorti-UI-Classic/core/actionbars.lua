@@ -371,7 +371,7 @@ end
     if not (dominos or bartender4) and not cfg.hotkeys.show then
       hooksecurefunc("ActionButton_UpdateHotkeys",  updateHotkey)
     end
-
+   a:UnregisterEvent("PLAYER_LOGIN")
   end
 
   ---------------------------------------
