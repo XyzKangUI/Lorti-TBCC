@@ -12,10 +12,11 @@ end)
 for i, v in pairs({
 	MinimapBorderTop,
 	MinimapToggleButton,
-	MiniMapWorldMapButton,
 	GameTimeFrame,
 	MinimapZoomIn,
 	MinimapZoomOut
     }) do
         v:Hide()
     end
+
+hooksecurefunc(MiniMapWorldMapButton, "Show", MiniMapWorldMapButton.Hide)
