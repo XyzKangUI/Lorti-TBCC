@@ -383,5 +383,6 @@ end
 	if event == "PLAYER_LOGIN" then
 		init()
 		self:UnregisterEvent("PLAYER_LOGIN")
+		self:SetScript("OnEvent", nil)
 	end
    end)
