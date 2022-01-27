@@ -371,7 +371,6 @@ end
     if not (dominos or bartender4) and not cfg.hotkeys.show then
       hooksecurefunc("ActionButton_UpdateHotkeys",  updateHotkey)
     end
-   a:UnregisterEvent("PLAYER_LOGIN")
   end
 
   ---------------------------------------
@@ -380,4 +379,9 @@ end
 
   local a = CreateFrame("Frame")
   a:RegisterEvent("PLAYER_LOGIN")
-  a:SetScript("OnEvent", init)
+  a:SetScript("OnEvent", function(self, event, ...)
+	if event == "PLAYER_LOGIN" then
+		init()
+		self:UnregisterEvent("PLAYER_LOGIN")
+	end
+   end)
